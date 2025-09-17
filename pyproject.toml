@@ -1,0 +1,15 @@
+[project]
+name = "ProxmoxScheduledRecovery"
+version = "0.1.0"
+description = "A simple script to automate the process of restoring backups in Proxmox VE."
+requires-python = ">=3.9"
+dependencies = [
+    "proxmoxer>=2.2.0",
+    "requests>=2.32",
+    "urllib3<2",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.13.0",
+]
