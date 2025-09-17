@@ -1,6 +1,23 @@
 # Proxmox Scheduled Recovery
 
 A simple script to automate the process of restoring backups in Proxmox VE.
+We have an internal process that creates backups of VMs on a regular basis, using Proxmox Backup Server.
+This script is designed to restore the latest backup of a specified VM or container on an offsite Proxmox VE server.
+This way we can ensure that we have a recent copy of our VMs in case of a disaster.
+
+```mermaid
+---
+config:
+  theme: mc
+title: Process
+---
+flowchart TD
+    E@{ shape: circle, label: "VM 999" } --> A
+    A[PVE Cluster A] -->|Backup Process| B(Proxmox Backup Server)
+    C(Scheduled Recovery Script)  -->|Retrieves Backup| B
+    C -->|Restore Process| D[PVE Cluster B]
+    D --> F@{ shape: circle, label: "VM 999" }
+```
 
 ## Features
 - Automatically restores the latest backup of a specified VM or container.
@@ -23,7 +40,7 @@ Set the following environment variables for authentication:
 - `PROXMOX_TOKEN_NAME`: API token name (only the name part, not the full `name@realm!tokenid`)
 - `PROXMOX_TOKEN_VALUE`: API token value
 - `PROXMOX_VERIFY_SSL`: Set to `True` to verify SSL certificates, `False` to skip verification (default: `False`)
-- `PROXMOX_STORAGE`: Storage name where backups are stored (e.g. `local`)
+- `PROXMOX_STORAGE`: Storage name where vm should be recovered to (e.g. `local`)
 - `PROXMOX_BACKUP_STORAGE`: Storage name where backups are stored (e.g. `pbs02`)
 
 ## Usage
