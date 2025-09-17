@@ -88,6 +88,19 @@ Restore completed successfully.
 GitHub Actions builds and lints this project on each push/PR using `uv` and `ruff`.
 The workflow uploads `dist/` artifacts for download.
 
+## Releases
+Releases are automatically created when you push a tag like `1.0.0`.
+The release workflow will:
+- Build the package for all supported Python versions
+- Create a GitHub release with the built artifacts attached
+- Include installation instructions in the release notes
+
+To create a release:
+```bash
+git tag 1.0.0
+git push origin 1.0.0
+```
+
 
 ## Dependencies
 - [`proxmoxer`](https://github.com/proxmoxer/proxmoxer/): Python wrapper for Proxmox API v2

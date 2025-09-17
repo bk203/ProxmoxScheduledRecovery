@@ -70,7 +70,15 @@ def get_task_status(proxmox, node, upid):
         return None
 
 
-def wait_for_task(proxmox, node, upid, *, timeout_seconds=600, initial_interval_seconds=5, max_interval_seconds=30):
+def wait_for_task(
+    proxmox,
+    node,
+    upid,
+    *,
+    timeout_seconds=600,
+    initial_interval_seconds=5,
+    max_interval_seconds=30,
+):
     start_time = time.time()
     interval = max(0.5, float(initial_interval_seconds))
     while True:
@@ -177,5 +185,3 @@ def main(argv=None):
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
-
