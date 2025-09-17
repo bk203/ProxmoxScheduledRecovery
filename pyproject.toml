@@ -9,7 +9,15 @@ dependencies = [
     "urllib3<2",
 ]
 
+[project.scripts]
+proxmox-scheduled-recovery = "proxmoxscheduledrecovery.cli:main"
+
 [dependency-groups]
 dev = [
     "ruff>=0.13.0",
+    "uv-build>=0.8.17",
 ]
+
+[build-system]
+requires = ["uv_build >= 0.8.17, <0.9.0"]
+build-backend = "uv_build"
