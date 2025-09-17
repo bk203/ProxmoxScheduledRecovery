@@ -48,6 +48,42 @@ Set the following environment variables for authentication:
 python proxmox_scheduled_recovery.py <vmid>
 ```
 
+### On server example
+```bash
+# Install required tools
+apt-get install python3-pip python3-venv
+# Create a virtual environment
+python3 -m venv ~/venvs/proxmox_recovery
+# Activate the virtual environment
+source ~/venvs/proxmox_recovery/bin/activate
+# Export environment variables (can also be set in the venv's bin/activate script)
+export PROXMOX_HOST="pve.example.com"
+export PROXMOX_USER="root@pam"
+...
+# Install build package (if not already installed in the venv)
+pip install proxmoxscheduledrecovery-0.1.0-py3-none-any.whl 
+# Run the script for vm 999
+proxmox_scheduled_recovery 999
+```
+
+Output:
+```
+VM 999 is stopped, proceeding...
+VM 999 deletion initiated.
+Tracking task with UPID: UPID:pve03:002BF047:132DF8C7:68CAD37C:qmdestroy:999:root@pam!ScheduledRecovery:
+Task in progress...
+Task in progress...
+VM 999 deletion completed.
+Latest backup: pbs02:backup/vm/999/2025-09-17T12:40:00Z
+VM 999 restore initiated from pbs02:backup/vm/999/2025-09-17T12:40:00Z.
+Tracking task with UPID: UPID:pve03:002BF069:132DFAEA:68CAD381:qmrestore:999:root@pam!ScheduledRecovery:
+Task in progress...
+Task in progress...
+Task in progress...
+VM 999 restore completed.
+Restore completed successfully.
+```
+
 ## Continuous Integration
 GitHub Actions builds and lints this project on each push/PR using `uv` and `ruff`.
 The workflow uploads `dist/` artifacts for download.
