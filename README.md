@@ -48,6 +48,11 @@ Set the following environment variables for authentication:
 python proxmox_scheduled_recovery.py <vmid>
 ```
 
+## Continuous Integration
+GitHub Actions builds and lints this project on each push/PR using `uv` and `ruff`.
+The workflow uploads `dist/` artifacts for download.
+
+
 ## Dependencies
 - [`proxmoxer`](https://github.com/proxmoxer/proxmoxer/): Python wrapper for Proxmox API v2
 - [`requests`](https://pypi.org/project/requests/): HTTP library for Python
