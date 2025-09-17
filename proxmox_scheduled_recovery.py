@@ -22,9 +22,13 @@ PROXMOX_BACKUP_DATASTORE = os.getenv("PROXMOX_BACKUP_DATASTORE")
 # Validate CONFIG
 # ================================
 required_env_vars = [
-    "PROXMOX_HOST", "PROXMOX_NODE", "PROXMOX_USER",
-    "PROXMOX_TOKEN_NAME", "PROXMOX_TOKEN_VALUE",
-    "PROXMOX_DATASTORE", "PROXMOX_BACKUP_DATASTORE"
+    "PROXMOX_HOST",
+    "PROXMOX_NODE",
+    "PROXMOX_USER",
+    "PROXMOX_TOKEN_NAME",
+    "PROXMOX_TOKEN_VALUE",
+    "PROXMOX_DATASTORE",
+    "PROXMOX_BACKUP_DATASTORE",
 ]
 
 for var in required_env_vars:
@@ -63,7 +67,9 @@ def get_task_status(upid):
         return None
 
 
-def wait_for_task(upid, *, timeout_seconds=600, initial_interval_seconds=5, max_interval_seconds=30):
+def wait_for_task(
+    upid, *, timeout_seconds=600, initial_interval_seconds=5, max_interval_seconds=30
+):
     start_time = time.time()
     interval = max(0.5, float(initial_interval_seconds))
     while True:
@@ -120,7 +126,6 @@ def restore_vm(vmid, datastore, backup_file, timeout=600):
             print(f"VM {vmid} restore failed or timed out.")
             sys.exit(1)
         print(f"VM {vmid} restore completed.")
-        return upid
 
     except Exception as e:
         print(f"Error restoring VM: {e}")
@@ -145,7 +150,7 @@ if __name__ == "__main__":
     else:
         print(f"VM {VMID} is stopped, proceeding...")
 
-    # # Delete old VM
+    # Delete old VM
     delete_vm(VMID)
 
     backups = (
@@ -164,6 +169,6 @@ if __name__ == "__main__":
     print(f"Latest backup: {backup_file}")
 
     # Restore VM
-    upid = restore_vm(VMID, PROXMOX_DATASTORE, backup_file)
+    restore_vm(VMID, PROXMOX_DATASTORE, backup_file)
 
     print("Restore completed successfully.")
